@@ -21,9 +21,9 @@
       <h1>Weather Dashboard</h1>
     </header>
 
-    <main class="d-flex justify-space-between">
+    <main class="d-flex flex-wrap justify-space-between">
       <!-- LEFT COLUMN -->
-      <div class="col-12 col-md-3">
+      <section class="col-12 col-md-3">
         <!-- Insert Form  -->
         <form class="d-flex flex-column" id="city-form">
           <label for="city-name" class="city-label">Search for a City:</label>
@@ -42,14 +42,15 @@
           >
             Search
           </button>
+          <span class="no-data"></span>
         </form>
-      </div>
+      </section>
 
       <!-- RIGHT COLUMN -->
-      <div class="col-12 col-md-8 ms-2">
+      <section class="col-12 col-md-8 ms-2">
         <!--dynamically generate buttons-->
         <div id="weather-info"></div>
-      </div>
+      </section>
     </main>
 
     <!-- jQuery Link -->
