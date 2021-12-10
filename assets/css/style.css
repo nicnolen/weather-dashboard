@@ -3,13 +3,3 @@
   box-sizing: border-box;
 }
 
-/* SELECTOR CLASSES */
-h1 {
-    text-align: center;
-}
-
-/* SPECIFIC CLASSES */
-.city-label {
-    font-weight: bolder;
-    font-size: 1.5em;
-}
