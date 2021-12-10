@@ -8,15 +8,19 @@ var searchBtnEl = document.getElementById('search-btn');
 // Reference the container where the weather info will be stored
 var weatherInfoEl = document.getElementById('weather-info');
 
+// Reference the users input value
+var inputVal = userInputEl.value;
 // define the OpenWeatherMap API URL
-var apiUrl =
-  'https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${apiKey)';
+var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${apiKey}`;
 // Reference your API key. The API  is your unique id associated with your OpenWeatherMap account
 var apiKey = '164ca084a373d5791ba7dbbc5cff2467';
 
 // FUNCTIONS
 // Function when user submits form
-
+var formSubmitHandler = function (event) {
+  // stop the form from submitting and reloading the page
+  event.preventDefault();
+};
 // Function to display current weather
 var currentWeather = function (weather) {
   // grab the current weather data
