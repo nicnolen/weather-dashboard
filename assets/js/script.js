@@ -85,8 +85,8 @@ var displayCurrentWeather = function (weather, searchCity) {
 
   // create a span element to hold temperature data
   var temperatureEl = document.createElement('span');
-  // set the text content
-  temperatureEl.textContent = 'Temperature: ' + weather.main.temp + '°F';
+  // set the text content. NOTE: \u00B0 is the unicode character for the degree symbol
+  temperatureEl.textContent = 'Temperature: ' + weather.main.temp + '\u00B0 F';
   // set class list
   temperatureEl.classList = 'list-group-item';
   // append to city search input
@@ -123,7 +123,7 @@ var getUvIndex = function (lat, lon) {
   // Reference your API key
   var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
   // reference the api URL
-  var curUvUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+  var curUvUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
 
   // fetch the API data
   fetch(curUvUrl).then(function (response) {
@@ -170,7 +170,7 @@ var fiveDay = function (lat, lon) {
   // Reference your API key
   var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
   // reference the api URL
-  var forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+  var forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
 
   // fetch the API data
   fetch(forecastUrl).then(function (response) {
@@ -203,6 +203,37 @@ var displayFiveDay = function (forecast) {
     forecastDate.textContent = moment.unix(dailyForecast.dt).format('L');
     // append to the forecast data container
     forecastDataEl.appendChild(forecastDate);
+
+    // create an image element to hold the icon
+    var weatherIcon = document.createElement('img');
+    // reference the icon
+    weatherIcon.setAttribute(
+      'src',
+      `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`
+    );
+    // append to the forecast data container
+    forecastDataEl.appendChild(weatherIcon);
+
+    // create a span element to hold the temperature
+    var temperature = document.createElement('div');
+    // set text content. NOTE \u00B0 is the unicode character for the degree symbol
+    temperature.textContent = 'Temp: ' + dailyForecast.temp.day + '\u00B0 F';
+    // apend to the forecast data container
+    forecastDataEl.appendChild(temperature);
+
+    // create a span element to hold wind
+    var windSpeed = document.createElement('div');
+    // set the text content
+    windSpeed.textContent = 'Wind Speed: ' + dailyForecast.wind_speed + 'MPH';
+    // append to the forecast data container
+    forecastDataEl.appendChild(windSpeed);
+
+    // create a span element for humidity
+    var humidity = document.createElement('div');
+    // set the text content
+    humidity.textContent = 'Humidity: ' + dailyForecast.humidity + '%';
+    // append to the forecast data container
+    forecastDataEl.appendChild(humidity);
 
     // append the data to its container
     forecastContainerEl.appendChild(forecastDataEl);
