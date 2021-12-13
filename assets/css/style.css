@@ -6,7 +6,9 @@
 /* SPECIFIC CLASSES */
 /* Weather condiions spacing */
 .list-group-item {
-    
+    border: none;
+    padding: 1rem;
+    font-weight: normal;
 }
 /* UV Index */
 .favorable {
