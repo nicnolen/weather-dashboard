@@ -219,21 +219,21 @@ var displayFiveDay = function (forecast) {
     // create a span element to hold the temperature
     var temperature = document.createElement('div');
     // set text content. NOTE \u00B0 is the unicode character for the degree symbol
-    temperature.textContent = 'Temp: ' + dailyForecast.temp + '\u00B0 F';
+    temperature.textContent = 'Temp: ' + dailyForecast.main.temp + '\u00B0 F';
     // apend to the forecast data container
     forecastDataEl.appendChild(temperature);
 
     // create a span element to hold wind
     var windSpeed = document.createElement('div');
     // set the text content
-    windSpeed.textContent = 'Wind Speed: ' + dailyForecast.wind_speed + 'MPH';
+    windSpeed.textContent = 'Wind Speed: ' + dailyForecast.wind.speed + 'MPH';
     // append to the forecast data container
     forecastDataEl.appendChild(windSpeed);
 
     // create a span element for humidity
     var humidity = document.createElement('div');
     // set the text content
-    humidity.textContent = 'Humidity: ' + dailyForecast.humidity + '%';
+    humidity.textContent = 'Humidity: ' + dailyForecast.main.humidity + '%';
     // append to the forecast data container
     forecastDataEl.appendChild(humidity);
 
@@ -244,8 +244,6 @@ var displayFiveDay = function (forecast) {
 
 // Make buttons for past searches
 var pastSearch = function (pastSearch) {
-  console.log(pastSearch);
-
   pastSearchEl = document.createElement('button');
   pastSearchEl.textContent = pastSearch;
   pastSearchEl.setAttribute('data-city', pastSearch);
