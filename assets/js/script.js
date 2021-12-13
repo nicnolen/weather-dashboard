@@ -115,6 +115,7 @@ var displayCurrentWeather = function (weather, searchCity) {
   var lon = weather.coord.lon;
   // call the function to get the uv index
   getUvIndex(lat, lon);
+  fiveDay(lat, lon);
 };
 
 // function to get the uv index
@@ -165,18 +166,19 @@ var displayUvIndex = function (index) {
 };
 
 // Grab the 5 day weather forecast
-var fiveDay = function (city) {
-  // reference unique api key
-  apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
-  // make a reference to the OpenWeather api. NOTE: MUST HAVE HTTPS
-  var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=5&units=imperial&appid=${apiKey}`;
+var fiveDay = function (lat, lon) {
+  // Reference your API key
+  var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
+  // reference the api URL
+  var forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-  // pass the API's URL to the fetch method to return a promise containing a response object
+  // fetch the API data
   fetch(forecastUrl).then(function (response) {
-    // put the desired data (data) into json format(json()) to get a response we can use.
-    // this returns another promise which, when fulfilled, will let the data be available for manipulation
+    // convert response to json
     response.json().then(function (data) {
+      // displayUvIndex(data)
       displayFiveDay(data);
+      console.log(data);
     });
   });
 };
@@ -187,21 +189,25 @@ var displayFiveDay = function (forecast) {
   forecastContainerEl.textContent = '';
   forecastTitleEl.textContent = '5-Day Forecast:';
 
-  // variable to hold the weather conditions list
-  var fiveDay = forecast.list;
   // make a loop for the 5 day forecast
   for (var i = 0; i < 5; i++) {
     // variable to get daily forecasts by iterating through the weather conditions array
-    var dailyForecast = fiveDay[i];
+    var dailyForecast = forecast.daily[i];
 
-    //make a container to hold the 5 day forcast data
-    var forecastEl = document.createElement('div');
-    forecastEl.classList = 'card bg-primary text-light m-2';
+    // make a container to hold the forcast values
+    var forecastDataEl = document.createElement('div');
 
-    console.log(dailyForecast);
+    // create a date element. Use an `<h4> to make it larger.
+    var forecastDate = document.createElement('h4');
+    // create the date using moment.js. .unix describes a specific point in time
+    forecastDate.textContent = moment.unix(dailyForecast.dt).format('L');
+    // append to the forecast data container
+    forecastDataEl.appendChild(forecastDate);
+
+    // append the data to its container
+    forecastContainerEl.appendChild(forecastDataEl);
   }
 };
-
 // CLICK EVENTS
 // Search button click event to save city
 userFormEl.addEventListener('submit', formSubmitHandler);
