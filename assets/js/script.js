@@ -121,7 +121,6 @@ var displayCurrentWeather = function (weather, searchCity) {
   var lon = weather.coord.lon;
   // call the function to get the uv index
   getUvIndex(lat, lon);
-
 };
 
 // function to get the uv index
@@ -136,23 +135,35 @@ var getUvIndex = function (lat, lon) {
     // convert response to json
     response.json().then(function (data) {
       // displayUvIndex(data)
-      displayUvIndex(data)
+      displayUvIndex(data);
     });
   });
 };
 
 // Function to display the UV index
-var displayUvIndex = function(index) {
-    // create a span element for the uv index
-    var uvIndexEl = document.createElement('span');
-    // add text content 
-    uvIndexEl.textContent = 'UV Index: ' + index.current.uvi;
-    // add class list
-    uvIndexEl.classList = 'list-group-item';
-    // append to the citySearchInput container
-    citySearchInputEl.appendChild(uvIndexEl);
-    console.log(index);
-}
+var displayUvIndex = function (index) {
+  // define the uv index
+  var uvi = index.current.uvi;
+  // create a span element for the uv index
+  var uvIndexEl = document.createElement('span');
+  // add text content
+  uvIndexEl.textContent = 'UV Index: ' + uvi;
+  // add class list
+  uvIndexEl.classList = 'list-group-item';
+
+  // apply UV colors based on if uvi is favorable (1-2), moderate (2-7) or severe (>7)
+  if (uvi < 2) {
+    uvIndexEl.classList = 'favorable';
+  } else if (uvi > 2 && uvi < 7) {
+    uvIndexEl.classList = 'moderate';
+  } else {
+      uvIndexEl.classList = 'severe'
+  };
+
+  // append to the citySearchInput container
+  citySearchInputEl.appendChild(uvIndexEl);
+  console.log(index);
+};
 
 // // Function to display 5 day weather forecast
 // var fiveDayForecast = function () {

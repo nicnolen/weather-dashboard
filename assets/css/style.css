@@ -3,3 +3,24 @@
   box-sizing: border-box;
 }
 
+/* SPECIFIC CLASSES */
+/* Weather condiions spacing */
+.list-group-item {
+    
+}
+/* UV Index */
+.favorable {
+    background-color: green;
+    color: white;
+} /* applies if uvi is between 1-2 */
+
+.moderate {
+    background-color: yellow;
+} /* applies if uvi is between 3-7 */
+.severe {
+    background-color: red;
+    color: white;
+} /* applies if uvi is above 7
+
+
+
