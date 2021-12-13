@@ -35,7 +35,7 @@ var formSubmitHandler = function (event) {
     // clear the city the user input
     userInputEl.value = '';
   } else {
-    alert('Please enter a city');
+    alert('Please search for a valid city');
   }
 
   // // save the cities array to local storage
@@ -49,21 +49,15 @@ var currentWeather = function (city) {
   // Reference your API key. The API  is your unique id associated with your OpenWeatherMap account
   var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
   // define the OpenWeatherMap API URL. Query string starts at `?`. Units=imperial displays the temperature in F
-  var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
+  var currentUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
 
   // pass the API's URL to the fetch method to return a promise containing a response object
-  fetch(apiUrl).then(function (response) {
-    // request was successful (.ok)
-    if (response.ok) {
-      // put the desired data (data) into json format(json()) to get a response we can use.
-      // this returns another promise which, when fulfilled, will let the data be available for manipulation
-      response.json().then(function (data) {
-        displayCurrentWeather(data, city);
-      });
-    } else {
-      // request was unsuccessful
-      alert('Please search for a valid city');
-    }
+  fetch(currentUrl).then(function (response) {
+    // put the desired data (data) into json format(json()) to get a response we can use.
+    // this returns another promise which, when fulfilled, will let the data be available for manipulation
+    response.json().then(function (data) {
+      displayCurrentWeather(data, city);
+    });
   });
 };
 
@@ -128,10 +122,10 @@ var getUvIndex = function (lat, lon) {
   // Reference your API key
   var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
   // reference the api URL
-  var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+  var curUvUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
   // fetch the API data
-  fetch(apiUrl).then(function (response) {
+  fetch(curUvUrl).then(function (response) {
     // convert response to json
     response.json().then(function (data) {
       // displayUvIndex(data)
@@ -170,11 +164,43 @@ var displayUvIndex = function (index) {
   citySearchInputEl.appendChild(uvContainer);
 };
 
-// // Function to display 5 day weather forecast
-// var fiveDayForecast = function () {
-//   console.log('future weather');
-// };
-// fiveDayForecast();
+// Grab the 5 day weather forecast
+var fiveDay = function (city) {
+  // reference unique api key
+  apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
+  // make a reference to the OpenWeather api. NOTE: MUST HAVE HTTPS
+  var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=5&units=imperial&appid=${apiKey}`;
+
+  // pass the API's URL to the fetch method to return a promise containing a response object
+  fetch(forecastUrl).then(function (response) {
+    // put the desired data (data) into json format(json()) to get a response we can use.
+    // this returns another promise which, when fulfilled, will let the data be available for manipulation
+    response.json().then(function (data) {
+      displayFiveDay(data);
+    });
+  });
+};
+
+// Function to display 5 day weather forecast
+var displayFiveDay = function (forecast) {
+  // clear old content
+  forecastContainerEl.textContent = '';
+  forecastTitleEl.textContent = '5-Day Forecast:';
+
+  // variable to hold the weather conditions list
+  var fiveDay = forecast.list;
+  // make a loop for the 5 day forecast
+  for (var i = 0; i < 5; i++) {
+    // variable to get daily forecasts by iterating through the weather conditions array
+    var dailyForecast = fiveDay[i];
+
+    //make a container to hold the 5 day forcast data
+    var forecastEl = document.createElement('div');
+    forecastEl.classList = 'card bg-primary text-light m-2';
+
+    console.log(dailyForecast);
+  }
+};
 
 // CLICK EVENTS
 // Search button click event to save city
