@@ -1,1 +1,52 @@
+/* GENERAL STYLES */
+/* Colors. NOTE: bg means its a background color, no bg means its a text color*/
+:root {
+    --bg-green: #0b960b;
+    --bg-yellow: #d5eb16;
+    --bg-red: #d40707;
+    --title-bg-primary: #0b96c0;
+    --title-bg-secondary: #031a97;
+    --text-white: #f1f1f1;
+    --border-color: #000000;
+     
+}
+* {
+  box-sizing: border-box;
+}
+
+/* Style the h1 */
+h1 {
+  background-color: var(--title-bg-primary);
+  background-image: linear-gradient(45deg, var(--title-bg-primary) 0%, var(--title-bg-secondary) 50%);
+  transition: all 0.5s ease-out;
+  background-size: 1400px 1px;
+  background-position: -10px 0px;
+  color: var(--text-white);
+}
+
+/* SPECIFIC CLASSES */
+/* Weather condiions spacing */
+.list-group-item {
+  border: none;
+  padding: 1rem;
+  font-weight: normal;
+}
+
+/* UV Index */
+.favorable {
+  background-color: var(--bg-green);
+  color: var(--text-white);
+} /* applies if uvi is between 1-2 */
+.moderate {
+  background-color: var(--bg-yellow);
+} /* applies if uvi is between 3-7 */
+.severe {
+  background-color: var(--bg-red);
+  color: var(--text-white);
+} /* applies if uvi is above 7 */
+
+/* Border for the forecast title */
+.border-style {
+  border-bottom: 3px solid var(--border-color);
+}
 
