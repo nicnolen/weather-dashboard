@@ -18,26 +18,27 @@
 
   <body class="m-4">
     <header class="text-center p-2">
-      <h1>Weather Dashboard</h1>
+      <h1 class="p-2">Weather Dashboard</h1>
     </header>
 
     <main class="container-fluid">
       <div class="row">
         <!-- LEFT COLUMN: search form -->
-        <section class="col-12 col-md-3 p-2">
+        <section class="col-12 col-md-3">
           <!-- Insert Form  -->
-          <form class="d-flex flex-column" id="city-form">
+          <form class="border-style d-flex flex-column" id="city-form">
             <h4>Search for a City:</h4>
             <input
               id="city-input"
               type="text"
               autofocus="true"
               placeholder="Austin"
+              class="text-capitalize"
             />
             <button
               type="submit"
               form="city-form"
-              class="search-btn btn btn-primary my-3"
+              class="btn btn-primary my-3"
             >
               <!-- Form refers to the form the button is associated to -->
               Search
@@ -49,7 +50,7 @@
 
         <!-- RIGHT COLUMN -->
         <!-- Current forecast section -->
-        <div class="col-12 col-md-8 ms-2">
+        <div class="col-12 col-md-8">
           <section id="current-forecast" class="row border">
             <div class="col-12">
               <h2 id="searched-city"></h2>
@@ -58,7 +59,7 @@
           </section>
           <!-- 5 day forecast -->
           <section id="five-day-forecast">
-            <h2 class="col-12" id="forecast-title"></h2>
+            <h2 class="col-12 mt-3" id="forecast-title"></h2>
             <div class="d-flex" id="forecast-container"></div>
           </section>
         </div>

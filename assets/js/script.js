@@ -71,6 +71,8 @@ var displayCurrentWeather = function (weather, searchCity) {
   // clear old content
   currentWeatherEl.textContent = '';
   citySearchInputEl.textContent = searchCity;
+  // Make sure the first letter of the city is capitalized
+  citySearchInputEl.classList = 'text-capitalize';
 
   // create date element using moments.js. Use span to make it inline
   var currentDate = document.createElement('span');
@@ -198,11 +200,15 @@ var displayFiveDay = function (forecast) {
 
     // make a container to hold the forcast values
     var forecastDataEl = document.createElement('div');
+    // style the container
+    forecastDataEl.classList = 'card m-2 pl-0 bg-primary text-white';
 
     // create a date element. Use an `<h4> to make it larger.
     var forecastDate = document.createElement('h4');
     // create the date using moment.js. .unix describes a specific point in time
     forecastDate.textContent = moment.unix(dailyForecast.dt).format('L');
+    // style the date
+    forecastDate.classList = 'card-header text-left border-style';
     // append to the forecast data container
     forecastDataEl.appendChild(forecastDate);
 
@@ -213,6 +219,8 @@ var displayFiveDay = function (forecast) {
       'src',
       `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`
     );
+    // style the icon
+    weatherIcon.classList = 'card-body text-left';
     // append to the forecast data container
     forecastDataEl.appendChild(weatherIcon);
 
@@ -220,6 +228,8 @@ var displayFiveDay = function (forecast) {
     var temperature = document.createElement('div');
     // set text content. NOTE \u00B0 is the unicode character for the degree symbol
     temperature.textContent = 'Temp: ' + dailyForecast.main.temp + '\u00B0 F';
+    // style the temperature
+    temperature.classList = 'card-body text-left';
     // apend to the forecast data container
     forecastDataEl.appendChild(temperature);
 
@@ -227,6 +237,8 @@ var displayFiveDay = function (forecast) {
     var windSpeed = document.createElement('div');
     // set the text content
     windSpeed.textContent = 'Wind Speed: ' + dailyForecast.wind.speed + 'MPH';
+    // style the wind speed
+    windSpeed.classList = 'card-body text-left';
     // append to the forecast data container
     forecastDataEl.appendChild(windSpeed);
 
@@ -234,6 +246,8 @@ var displayFiveDay = function (forecast) {
     var humidity = document.createElement('div');
     // set the text content
     humidity.textContent = 'Humidity: ' + dailyForecast.main.humidity + '%';
+    // style the humidity
+    humidity.classList = 'card-body text-left';
     // append to the forecast data container
     forecastDataEl.appendChild(humidity);
 
@@ -244,16 +258,26 @@ var displayFiveDay = function (forecast) {
 
 // Make buttons for past searches
 var pastSearch = function (pastSearch) {
-  pastSearchEl = document.createElement('button');
+  // create buttons for the past searches
+  var pastSearchEl = document.createElement('button');
+  // Add the user input text as the text-content
   pastSearchEl.textContent = pastSearch;
+  // set the attribute data-city with a value of past search
   pastSearchEl.setAttribute('data-city', pastSearch);
+  // set the button as a submit button
   pastSearchEl.setAttribute('type', 'submit');
+  // style the button
+  pastSearchEl.classList = 'btn btn-secondary w-100 my-2 text-capitalize';
 
+  // insert the button as the first button in the pastSearchEl container
   pastSearchBtnEl.prepend(pastSearchEl);
 };
 
+// Make a function to handle the past searches
 var pastSearchHandler = function (event) {
+  // make a variable to get the values (user input) from the data-city attribute
   var city = event.target.getAttribute('data-city');
+  // Make a conditional saying that if a city is inputted, display the current weather and 5 day forecast
   if (city) {
     currentWeather(city);
     fiveDay(city);
@@ -261,6 +285,7 @@ var pastSearchHandler = function (event) {
 };
 
 // CLICK EVENTS
-// Search button click event to save city
+// Search button submit event to save city
 userFormEl.addEventListener('submit', formSubmitHandler);
+// Past search button click events to go to the city
 pastSearchBtnEl.addEventListener('click', pastSearchHandler);
