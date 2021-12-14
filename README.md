@@ -1,4 +1,4 @@
-# weather-dashboard
+# Weather Dashboard
 
 ## Description
 Created a weather dashboard that dynamically displays the weather outlook for multiple cities. On the left side of the page is a form where a user can input a city. When a user inputs a city, a button with that city's name will be created so that the user can easily go back to a previous city. On the right side of the page, the current weather is displayed at the top and a five day forecast is displayed at the bottom. The UV index is color coded based on the severity level.
