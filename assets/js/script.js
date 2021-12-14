@@ -175,7 +175,7 @@ var fiveDay = function (city) {
   // Reference your API key
   var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
   // reference the api URL
-  var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
+  var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&exclude=minutely,hourly&appid=${apiKey}`;
 
   // fetch the API data
   fetch(forecastUrl).then(function (response) {
@@ -189,15 +189,20 @@ var fiveDay = function (city) {
 
 // Function to display 5 day weather forecast
 var displayFiveDay = function (forecast) {
+  console.log(forecast);
   // clear old content
   forecastContainerEl.textContent = '';
   forecastTitleEl.textContent = '5-Day Forecast:';
+  
+  // define the forecast list
+  var forecastData = forecast.list;
 
-  // make a loop for the 5 day forecast
-  for (var i = 0; i < 5; i++) {
+  // make a loop for the 5 day forecast.
+  // Start at i=5 because that is the middle of the current day. Use i = i + 8 because the weather forecasts every 3 hours and 8*3=24 hours or one day
+  for (var i = 5; i < forecastData.length; i = i + 8) {
     // variable to get daily forecasts by iterating through the weather conditions array
-    var dailyForecast = forecast.list[i];
-
+    var dailyForecast = forecastData[i];
+    console.log(dailyForecast);
     // make a container to hold the forcast values
     var forecastDataEl = document.createElement('div');
     // style the container
@@ -205,12 +210,13 @@ var displayFiveDay = function (forecast) {
 
     // create a date element. Use an `<h4> to make it larger.
     var forecastDate = document.createElement('h4');
-    // create the date using moment.js. .unix describes a specific point in time
+    // create the date using moment.js. .unix describes a specific point in time. Without it, the date would be in 1970
     forecastDate.textContent = moment.unix(dailyForecast.dt).format('L');
     // style the date
-    forecastDate.classList = 'card-header text-left border-style';
+    forecastDate.classList = 'card-header text-left border-style d-flex flex-nowrap';
     // append to the forecast data container
     forecastDataEl.appendChild(forecastDate);
+    console.log(dailyForecast.dt);
 
     // create an image element to hold the icon
     var weatherIcon = document.createElement('img');
