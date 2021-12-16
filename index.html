@@ -32,14 +32,10 @@
               id="city-input"
               type="text"
               autofocus="true"
-              placeholder="Austin"
+              placeholder="Enter city name."
               class="text-capitalize"
             />
-            <button
-              type="submit"
-              form="city-form"
-              class="btn btn-primary my-3"
-            >
+            <button type="submit" form="city-form" class="btn btn-primary my-3">
               <!-- Form refers to the form the button is associated to -->
               Search
             </button>
@@ -50,17 +46,25 @@
 
         <!-- RIGHT COLUMN -->
         <!-- Current forecast section -->
-        <div class="col-12 col-md-8">
-          <section id="current-forecast" class="row border">
-            <div class="col-12">
-              <h2 id="searched-city"></h2>
-              <div id="current-weather-container" class="list-group"></div>
+        <div class="col-12 col-md-9">
+          <section class="card mt-2" id="current-forecast">
+            <div class="card-body">
+              <div class="d-flex flex-row">
+                <h2
+                  class="card-title align-self-center"
+                  id="searched-city"
+                ></h2>
+              </div>
+              <div class="list-group" id="current-weather-container"></div>
             </div>
           </section>
           <!-- 5 day forecast -->
           <section id="five-day-forecast">
-            <h2 class="col-12 mt-3" id="forecast-title"></h2>
-            <div class="d-flex" id="forecast-container"></div>
+            <h2 class="card-title mt-3" id="forecast-title"></h2>
+            <div
+              class="row border justify-content-between"
+              id="forecast-container"
+            ></div>
           </section>
         </div>
       </div>
