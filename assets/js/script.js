@@ -211,8 +211,8 @@ var displayFiveDay = function (forecast) {
   var forecastData = forecast.daily;
 
   // make a loop for the 5 day forecast.
-  // Start at i=5 because that is the middle of the current day. Use i = i + 8 because the weather forecasts every 3 hours and 8*3=24 hours or one day
-  for (var i = 7; i < forecastData.length; i = i + 8) {
+  // since there are 8 arrays under daily forecast, set i < 5 to get 5 arrays
+  for (var i = 0; i < 5; i++) {
     // variable to get daily forecasts by iterating through the weather conditions array
     var dailyForecast = forecastData[i];
     // make a container to hold the forcast values
