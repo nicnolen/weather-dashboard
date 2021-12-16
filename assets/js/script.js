@@ -202,7 +202,6 @@ var fiveDay = function (lat, lon) {
 
 // Function to display 5 day weather forecast
 var displayFiveDay = function (forecast) {
-  console.log(forecast);
   // clear old content
   forecastContainerEl.textContent = '';
   forecastTitleEl.textContent = '5-Day Forecast:';
