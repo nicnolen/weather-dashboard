@@ -225,7 +225,7 @@ var displayFiveDay = function (forecast) {
     forecastDate.textContent = moment.unix(dailyForecast.dt).format('L');
     // style the date
     forecastDate.classList =
-      'card-header text-left border-style d-flex flex-nowrap';
+      'card-header border-style d-flex flex-nowrap justify-content-center';
     // append to the forecast data container
     forecastDataEl.appendChild(forecastDate);
 
@@ -237,7 +237,7 @@ var displayFiveDay = function (forecast) {
       `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`
     );
     // style the icon
-    weatherIcon.classList = 'card-body text-left';
+    weatherIcon.classList = 'card-body text-center';
     // append to the forecast data container
     forecastDataEl.appendChild(weatherIcon);
 
@@ -246,7 +246,7 @@ var displayFiveDay = function (forecast) {
     // set text content. NOTE \u00B0 is the unicode character for the degree symbol
     temperature.textContent = 'Temp: ' + dailyForecast.temp.day + '\u00B0 F';
     // style the temperature
-    temperature.classList = 'card-body text-left';
+    temperature.classList = 'card-body text-center';
     // apend to the forecast data container
     forecastDataEl.appendChild(temperature);
 
@@ -255,7 +255,7 @@ var displayFiveDay = function (forecast) {
     // set the text content
     windSpeed.textContent = 'Wind Speed: ' + dailyForecast.wind_speed + 'MPH';
     // style the wind speed
-    windSpeed.classList = 'card-body text-left';
+    windSpeed.classList = 'card-body text-center';
     // append to the forecast data container
     forecastDataEl.appendChild(windSpeed);
 
@@ -264,7 +264,7 @@ var displayFiveDay = function (forecast) {
     // set the text content
     humidity.textContent = 'Humidity: ' + dailyForecast.humidity + '%';
     // style the humidity
-    humidity.classList = 'card-body text-left';
+    humidity.classList = 'card-body text-center';
     // append to the forecast data container
     forecastDataEl.appendChild(humidity);
 
