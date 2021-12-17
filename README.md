@@ -8,7 +8,6 @@ Created a weather dashboard that dynamically displays the weather outlook for mu
 * CSS
 * JavaScript
 * BootStrap
-* jQuery
 * moments.js
 
 ## Installation
