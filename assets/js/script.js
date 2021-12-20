@@ -1,4 +1,10 @@
 // GLOBAL VARIABLES
+// Empty array to store the cities the user inputs
+var cities = [];
+// Reference your API key. The API  is your unique id associated with your OpenWeatherMap account
+var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
+
+// HTML references
 // Reference the form
 var userFormEl = document.getElementById('city-form');
 // Reference the input box
@@ -14,45 +20,9 @@ var forecastTitleEl = document.getElementById('forecast-title');
 // Reference the submit button
 var pastSearchBtnEl = document.getElementById('past-search-buttons');
 
-// Empty array to store the cities the user inputs
-var cities = [];
-
 // FUNCTIONS
-// Function when user submits form
-var formSubmitHandler = function (event) {
-  // stop the page from refreshing
-  event.preventDefault();
-
-  // grab the value in the input field (.value) and remove whitespace (.trim)
-  var city = userInputEl.value.trim();
-
-  // If the user did input a city
-  if (city) {
-    // pass that value to the current weather and 5 day forecasts
-    currentWeather(city);
-
-    // clear the city the user input
-    userInputEl.value = '';
-  } else {
-    // If nothing was entered, the user recieves an alert
-    alert('Please search for a valid city');
-  }
-
-  // call the function that saves the cities array to local storage
-  saveCities();
-  // create a new button for the searched city
-  pastSearch(city);
-};
-
-// save the cities array to local storage
-var saveCities = function () {
-  localStorage.setItem('cities', JSON.stringify(cities));
-};
-
 // Grab the current weather data
 var currentWeather = function (city) {
-  // Reference your API key. The API  is your unique id associated with your OpenWeatherMap account
-  var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
   // define the OpenWeatherMap API URL. Query string starts at `?`. Units=imperial displays the temperature in F
   var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
 
@@ -68,8 +38,8 @@ var currentWeather = function (city) {
         });
         // request fails
       } else {
-        alert('Error: ' + response.statusText);
-      } // .statusText will contain the status message corresponding to the HTTP status code (ok for code 200, continue for code 100, not found for code 404)
+        alert('Please type a valid city.');
+      }
     })
 
     // alert user if there is no response from OpenWeather
@@ -138,8 +108,6 @@ var displayCurrentWeather = function (weather, searchCity) {
 
 // function to get the uv index
 var getUvIndex = function (lat, lon) {
-  // Reference your API key
-  var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
   // reference the api URL
   var curUvUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
 
@@ -185,8 +153,6 @@ var displayUvIndex = function (index) {
 
 // Grab the 5 day weather forecast
 var fiveDay = function (lat, lon) {
-  // Reference your API key
-  var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
   // reference the api URL
   var forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
 
@@ -225,7 +191,7 @@ var displayFiveDay = function (forecast) {
     forecastDate.textContent = moment.unix(dailyForecast.dt).format('L');
     // style the date
     forecastDate.classList =
-      'card-header text-left border-style d-flex flex-nowrap';
+      'card-header border-style d-flex flex-nowrap justify-content-center';
     // append to the forecast data container
     forecastDataEl.appendChild(forecastDate);
 
@@ -237,7 +203,7 @@ var displayFiveDay = function (forecast) {
       `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`
     );
     // style the icon
-    weatherIcon.classList = 'card-body text-left';
+    weatherIcon.classList = 'card-body text-center';
     // append to the forecast data container
     forecastDataEl.appendChild(weatherIcon);
 
@@ -246,7 +212,7 @@ var displayFiveDay = function (forecast) {
     // set text content. NOTE \u00B0 is the unicode character for the degree symbol
     temperature.textContent = 'Temp: ' + dailyForecast.temp.day + '\u00B0 F';
     // style the temperature
-    temperature.classList = 'card-body text-left';
+    temperature.classList = 'card-body text-center';
     // apend to the forecast data container
     forecastDataEl.appendChild(temperature);
 
@@ -255,7 +221,7 @@ var displayFiveDay = function (forecast) {
     // set the text content
     windSpeed.textContent = 'Wind Speed: ' + dailyForecast.wind_speed + 'MPH';
     // style the wind speed
-    windSpeed.classList = 'card-body text-left';
+    windSpeed.classList = 'card-body text-center';
     // append to the forecast data container
     forecastDataEl.appendChild(windSpeed);
 
@@ -264,7 +230,7 @@ var displayFiveDay = function (forecast) {
     // set the text content
     humidity.textContent = 'Humidity: ' + dailyForecast.humidity + '%';
     // style the humidity
-    humidity.classList = 'card-body text-left';
+    humidity.classList = 'card-body text-center';
     // append to the forecast data container
     forecastDataEl.appendChild(humidity);
 
@@ -288,6 +254,37 @@ var pastSearch = function (pastSearch) {
 
   // insert the button as the first button in the pastSearchEl container
   pastSearchBtnEl.prepend(pastSearchEl);
+};
+
+// Function when user submits form
+var formSubmitHandler = function (event) {
+  // stop the page from refreshing
+  event.preventDefault();
+
+  // grab the value in the input field (.value) and remove whitespace (.trim)
+  var city = userInputEl.value.trim();
+
+  // If the user did input a city
+  if (city) {
+    // pass that value to the current weather and 5 day forecasts
+    currentWeather(city);
+
+    // clear the city the user input
+    userInputEl.value = '';
+  } else {
+    // If nothing was entered, the user recieves an alert
+    alert('Please search for a valid city');
+  }
+
+  // call the function that saves the cities array to local storage
+  saveCities();
+  // create a new button for the searched city
+  pastSearch(city);
+};
+
+// save the cities array to local storage
+var saveCities = function () {
+  localStorage.setItem('cities', JSON.stringify(cities));
 };
 
 // Make a function to handle the past searches
