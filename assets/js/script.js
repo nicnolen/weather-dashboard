@@ -33,8 +33,9 @@ var currentWeather = function (city) {
       if (response.ok) {
         // put the desired data (data) into json format(json()) to get a response we can use.
         // this returns another promise which, when fulfilled, will let the data be available for manipulation
-        response.json().then(function (data) {
-          displayCurrentWeather(data);
+        response.json().then(function (weather) {
+          displayCurrentWeather(weather, city);
+          console.log(weather);
         });
         // request fails
       } else {
@@ -49,10 +50,12 @@ var currentWeather = function (city) {
 };
 
 // Function to display current weather
-var displayCurrentWeather = function (weather, searchCity) {
+var displayCurrentWeather = function (weather, city) {
+  // console.log(city);
+  // console.log(weather);
   // clear old content
   currentWeatherEl.textContent = '';
-  citySearchInputEl.textContent = searchCity;
+  citySearchInputEl.textContent = city;
   // Make sure the first letter of the city is capitalized
   citySearchInputEl.classList = 'text-capitalize';
 
@@ -67,7 +70,7 @@ var displayCurrentWeather = function (weather, searchCity) {
   // set the source
   weatherIcon.setAttribute(
     'src',
-    `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
+    `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
   );
   // append to city search input
   citySearchInputEl.appendChild(weatherIcon);
