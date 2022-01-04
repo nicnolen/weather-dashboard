@@ -8,7 +8,7 @@ Created a weather dashboard that dynamically displays the weather outlook for mu
 * CSS
 * JavaScript
 * BootStrap
-* moments.js
+* moment.js
 
 ## Installation
 There is no installation required for this website. Simply click on the link below and you will be taken directly to the website!   
