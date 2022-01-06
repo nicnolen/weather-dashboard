@@ -1,4 +1,4 @@
-// GLOBAL VARIABLES
+/* GLOBAL VARIABLES */
 // Fill city array with whats in local storage or give me an empty array
 var cities = JSON.parse(localStorage.getItem('cities')) || [];
 // Reference your API key. The API  is your unique id associated with your OpenWeatherMap account
@@ -15,12 +15,12 @@ var citySearchInputEl = document.getElementById('searched-city');
 var currentWeatherEl = document.getElementById('current-weather-container');
 // Reference to the five day forecast container
 var forecastContainerEl = document.getElementById('forecast-container');
-// Reference to the title of the five day forecas
+// Reference to the title of the five day forecast
 var forecastTitleEl = document.getElementById('forecast-title');
 // Reference the submit button
 var pastSearchBtnEl = document.getElementById('past-search-buttons');
 
-// FUNCTIONS
+/* FUNCTIONS */
 // Grab the current weather data
 var currentWeather = function (city) {
   // define the OpenWeatherMap API URL. Query string starts at `?`. Units=imperial displays the temperature in F
@@ -51,8 +51,6 @@ var currentWeather = function (city) {
 
 // Function to display current weather
 var displayCurrentWeather = function (weather, city) {
-  // console.log(city);
-  // console.log(weather);
   // clear old content
   currentWeatherEl.textContent = '';
   citySearchInputEl.textContent = city;
@@ -298,8 +296,6 @@ var buildMenu = function () {
   });
 };
 
-// CLICK EVENTS
+/* CLICK EVENTS */
 // Search button submit event to save city
 userFormEl.addEventListener('submit', formSubmitHandler);
-// Past search button click events to go to the city
-// pastSearchBtnEl.addEventListener('click', pastSearchHandler);
