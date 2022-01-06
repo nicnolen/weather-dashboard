@@ -1,6 +1,6 @@
 // GLOBAL VARIABLES
-// Empty array to store the cities the user inputs
-var cities = [];
+// Fill city array with whats in local storage or give me an empty array
+var cities = JSON.parse(localStorage.getItem('cities')) || [];
 // Reference your API key. The API  is your unique id associated with your OpenWeatherMap account
 var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
 
@@ -35,11 +35,11 @@ var currentWeather = function (city) {
         // this returns another promise which, when fulfilled, will let the data be available for manipulation
         response.json().then(function (weather) {
           displayCurrentWeather(weather, city);
-          console.log(weather);
         });
         // request fails
       } else {
         alert('Please type a valid city.');
+        return;
       }
     })
 
@@ -242,31 +242,12 @@ var displayFiveDay = function (forecast) {
   }
 };
 
-// Make buttons for past searches
-var pastSearch = function (pastSearch) {
-  // create buttons for the past searches
-  var pastSearchEl = document.createElement('button');
-  // Add the user input text as the text-content
-  pastSearchEl.textContent = pastSearch;
-  // set the attribute data-city with a value of past search
-  pastSearchEl.setAttribute('data-city', pastSearch);
-  // set the button as a submit button
-  pastSearchEl.setAttribute('type', 'submit');
-  // style the button
-  pastSearchEl.classList = 'btn btn-secondary w-100 my-2 text-capitalize';
-
-  // insert the button as the first button in the pastSearchEl container
-  pastSearchBtnEl.prepend(pastSearchEl);
-};
-
 // Function when user submits form
 var formSubmitHandler = function (event) {
   // stop the page from refreshing
   event.preventDefault();
 
-  // grab the value in the input field (.value) and remove whitespace (.trim)
   var city = userInputEl.value.trim();
-
   // If the user did input a city
   if (city) {
     // pass that value to the current weather and 5 day forecasts
@@ -277,32 +258,48 @@ var formSubmitHandler = function (event) {
   } else {
     // If nothing was entered, the user recieves an alert
     alert('Please search for a valid city');
+    return;
   }
-
-  // call the function that saves the cities array to local storage
-  saveCities();
-  // create a new button for the searched city
-  pastSearch(city);
+  buttonSubmitHandler(city);
 };
 
-// save the cities array to local storage
-var saveCities = function () {
-  localStorage.setItem('cities', JSON.stringify(cities));
+var buttonSubmitHandler = function (city) {
+  // if the city isnt an index of the cities array (-1)
+  if (cities.indexOf(city) === -1) {
+    // putting the search city into the cities array
+    cities.push(city);
+    // save the cities array to session storage (reset on refresh)
+    sessionStorage.setItem('cities', JSON.stringify(cities));
+  } else {
+    return;
+  }
+  buildMenu();
 };
 
-// Make a function to handle the past searches
-var pastSearchHandler = function (event) {
-  // make a variable to get the values (user input) from the data-city attribute
-  var city = event.target.getAttribute('data-city');
-  // Make a conditional saying that if a city is inputted, display the current weather and 5 day forecast
-  if (city) {
-    currentWeather(city);
-    fiveDay(city);
-  }
+// Make buttons for past searches
+var buildMenu = function () {
+  // clear the last buttons saved
+  pastSearchBtnEl.innerHTML = '';
+  // for each city in local storage
+  cities.forEach(function (city) {
+    // create a button
+    var cityButton = document.createElement('button');
+    // set the text content to the user input
+    cityButton.textContent = city;
+    cityButton.onclick = function () {
+      currentWeather(city);
+      fiveDay(city);
+    };
+    // style the button
+    cityButton.classList = 'btn btn-secondary w-100 my-2 text-capitalize';
+
+    // insert the button as the first button in the pastSearchEl container
+    pastSearchBtnEl.prepend(cityButton);
+  });
 };
 
 // CLICK EVENTS
 // Search button submit event to save city
 userFormEl.addEventListener('submit', formSubmitHandler);
 // Past search button click events to go to the city
-pastSearchBtnEl.addEventListener('click', pastSearchHandler);
+// pastSearchBtnEl.addEventListener('click', pastSearchHandler);
