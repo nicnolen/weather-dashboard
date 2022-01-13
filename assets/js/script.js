@@ -1,6 +1,7 @@
 /* GLOBAL VARIABLES */
 // Fill city array with whats in local storage or give me an empty array
-var cities = JSON.parse(localStorage.getItem('cities')) || [];
+var cities = JSON.parse(localStorage.getItem(cities)) || [];
+var lastCity = localStorage.getItem('lastCity');
 // Reference your API key. The API  is your unique id associated with your OpenWeatherMap account
 var apiKey = `164ca084a373d5791ba7dbbc5cff2467`;
 
@@ -11,6 +12,8 @@ var userFormEl = document.getElementById('city-form');
 var userInputEl = document.getElementById('city-input');
 // Reference to the <h2> that will store the city the user inputted
 var citySearchInputEl = document.getElementById('searched-city');
+// Reference error messages
+var errorEl = document.getElementById('error-message');
 // Reference the container where the weather info will be stored
 var currentWeatherEl = document.getElementById('current-weather-container');
 // Reference to the five day forecast container
@@ -29,6 +32,7 @@ var currentWeather = function (city) {
   // pass the API's URL to the fetch method to return a promise containing a response object
   fetch(apiUrl)
     .then(function (response) {
+      errorEl.innerHTML = '';
       // request was successful
       if (response.ok) {
         // put the desired data (data) into json format(json()) to get a response we can use.
@@ -36,23 +40,29 @@ var currentWeather = function (city) {
         response.json().then(function (weather) {
           displayCurrentWeather(weather, city);
         });
+
+        buttonSubmitHandler(city);
         // request fails
-      } else {
-        alert('Please type a valid city.');
-        return;
       }
+      if (!response.ok) {
+        errorEl.innerHTML = `<h3 class="card-title text-center text-danger">OpenWeather was unable to find ${city}, please try again</h3>`;
+      }
+      // else {
+      //   console.log('Please type a valid city.');
+      //   return false;
+      // }
     })
 
     // alert user if there is no response from OpenWeather
     .catch(function (error) {
-      alert('Unable to connect to OpenWeather');
+      errorEl.innerHTML = `<h3>Unable to connect to OpenWeather</h3>`;
     });
 };
 
 // Function to display current weather
 var displayCurrentWeather = function (weather, city) {
   // clear old content
-  currentWeatherEl.textContent = '';
+  currentWeatherEl.innerHTML = '';
   citySearchInputEl.textContent = city;
   // Make sure the first letter of the city is capitalized
   citySearchInputEl.classList = 'text-capitalize';
@@ -245,6 +255,8 @@ var formSubmitHandler = function (event) {
   // stop the page from refreshing
   event.preventDefault();
 
+  currentWeatherEl.innerHTML = '';
+
   var city = userInputEl.value.trim();
   // If the user did input a city
   if (city) {
@@ -254,11 +266,8 @@ var formSubmitHandler = function (event) {
     // clear the city the user input
     userInputEl.value = '';
   } else {
-    // If nothing was entered, the user recieves an alert
-    alert('Please search for a valid city');
-    return;
+    errorEl.innerHTML = `<h3 class="card-title text-center text-danger">Please type in a valid city</h3>`;
   }
-  buttonSubmitHandler(city);
 };
 
 var buttonSubmitHandler = function (city) {
@@ -267,10 +276,10 @@ var buttonSubmitHandler = function (city) {
     // putting the search city into the cities array
     cities.push(city);
     // save the cities array to session storage (reset on refresh)
-    sessionStorage.setItem('cities', JSON.stringify(cities));
-  } else {
-    return;
+    localStorage.setItem('cities', JSON.stringify(cities));
   }
+  // on page load, run function with city
+  localStorage.setItem('lastCity', city);
   buildMenu();
 };
 
@@ -299,3 +308,6 @@ var buildMenu = function () {
 /* CLICK EVENTS */
 // Search button submit event to save city
 userFormEl.addEventListener('submit', formSubmitHandler);
+
+// on page load run city function
+currentWeather(localStorage.getItem('lastCity'));
