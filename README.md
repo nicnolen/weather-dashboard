@@ -17,9 +17,7 @@ Link: https://nicnolen.github.io/weather-dashboard/
 
 When you click on the link, you should see a webpage similar to the one below.  
 
-
-![Weather Dashboard homepage.](https://user-images.githubusercontent.com/88728912/146075846-c49b4228-90b8-48ff-8b72-819292c568b0.png)
-
+![Weather Dashboard Homepage](https://user-images.githubusercontent.com/88728912/149376418-b9e748dc-cff2-43a9-b66c-bdb06951736c.png)
 
 If you see this page, you're good to go!
 
